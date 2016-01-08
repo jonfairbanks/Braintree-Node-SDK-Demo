@@ -1,0 +1,33 @@
+!!! 5
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/stylesheets/chunkfive-fontface.css')
+  body
+    header
+      nav
+        ul
+          li 
+            a(href="/") Home
+          li 
+            a(href="/sale") Basic Sale
+          li
+            a(href="/customer") Create a Customer
+          li
+            a(href='/vault') Vault
+          li
+            a(href="/client_token") Token
+    section#wrapper
+      block content
+      footer 
+        section.css-table
+          section.four-column
+            section.cell
+              a(href='https://developers.braintreepayments.com' , target='_blank') Braintree Developer Docs
+            section.cell
+              a(href='https://github.com/braintree/braintree_node', target='_blank') Braintree Node.JS SDK
+            section.cell
+              a(href='https://github.paypal.com/jonfairbanks/Braintree-Node.JS-SDK-Demo' , target='_blank') Github Project Repo
+            section.cell
+              a(href='mailto:jonfairbanks@paypal.com?Subject=Braintree%20Node%20Demo%20Feedback') Report a Problem

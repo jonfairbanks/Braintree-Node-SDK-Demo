@@ -1,0 +1,43 @@
+extends layout
+
+block content
+  h1 Braintree Tests
+  section.css-table
+    section.two-column
+      section.cell
+        h2 Drop-In UI Demo
+        form(method='post', action='/checkout')
+          #payment-form
+          input(type='submit', value='Pay $1.00 (Sandbox)')
+          br
+          &nbsp;
+        script(src='https://js.braintreegateway.com/v2/braintree.js')
+        script.
+          braintree.setup(
+              "#{clientToken}",
+              "dropin", {
+              container: "payment-form",
+              paypal: {
+                singleUse: true,
+                amount: 1.00,
+                currency: 'USD',
+                displayName: 'Braintree Node.JS SDK Demo'
+              }
+            })
+      section.cell
+        h2 Sale Payment Types
+        p Braintree supports credit cards, PayPal payments, Venmo, Android Pay and Apple Pay. 
+        p This particular web demo currently only supports credit card and PayPal payments.
+        img(src='images/cc_logos.jpg', alt='Braintree & PayPal')
+  section.css-table
+    section.three-column
+      section.cell
+        h3 Current clientToken
+        p(style='width: 900px; overflow: scroll;') #{clientToken}
+        //p CSS&#39; broke, yo.
+      section.cell
+        //h3 Phasellus lacus
+        //p Lorem ipsum dolar sit amet, cons incidunt ut labore et dolore magn trud exercitation ullamcorpor susc vel eum irure dolor in reprehende dolore eu fugiat nulla pariatur.
+      section.cell
+        //h3 Aliquam vulputate
+        //p Lorem ipsum dolar sit amet, cons incidunt ut labore et dolore magn trud exercitation ullamcorpor susc vel eum irure dolor in reprehende dolore eu fugiat nulla pariatur.

@@ -1,0 +1,82 @@
+extends layout
+
+block content
+  h1 PayPal Vault Payment
+  section.css-table
+    section.two-column
+      section.cell
+        h2 Sample Payment Form
+        form(method='post', action='/vault-checkout')
+          #paypal-container
+          br
+          input(type='submit', value='Submit')
+          img(src='images/cc_logos_big.jpg', alt='Braintree & PayPal', width='319', height='110')
+          br
+          &nbsp;
+        script(src='https://js.braintreegateway.com/v2/braintree.js')
+        script.
+          braintree.setup("#{clientToken}", "custom", {
+              paypal: {
+                container: "paypal-container",
+                singleUse: false,
+                currency: 'USD',
+                locale: 'en_us',
+                displayName: 'Braintree Node.JS SDK Demo'
+              }, 
+              onPaymentMethodReceived: function (obj) {
+                var nonce = obj.nonce;
+              }
+          })
+          br
+          &nbsp;
+      section.cell
+        div(style='height: 300px; overflow: scroll; background-color: #F2F2F2;  padding: 10px; border-radius: 5px;')
+            h4 Client-Side Code:
+            pre.
+              // vault.jade
+              braintree.setup(YOUR CLIENT TOKEN, "custom", {
+                  paypal: {
+                    container: "paypal-container",
+                    singleUse: false,
+                    currency: 'USD',
+                    locale: 'en_us',
+                    displayName: 'Braintree Node.JS SDK Demo'
+                  }, 
+                  onPaymentMethodReceived: function (obj) {
+                    var nonce = obj.nonce;
+                  }
+              })
+              &nbsp;
+            h4 Server-Side Code:
+            pre.
+              // index.js
+              gateway.transaction.sale(saleRequest, function (err, result) {
+                if (err) {
+                    res.send("<h1>Error:  " + err + "</h1>");
+                } else if (result.success) {
+                    btResponse = JSON.stringify(result, null, 4);
+                    btObj = result;
+                    try {
+                        tempId = btObj.transaction.paypal.debugId;
+                        debugId = tempId.substring(6);
+                    }catch(e){
+                        debugId = 'n/a';
+                    }
+                    timestamp = moment(btObj.transaction.createdAt, moment.ISO_8601).format('MMM Do YYYY @ h:mm a');
+                    res.render('vault-complete', {
+                       title: 'Vault | Braintree Demo'}
+                    );
+                } else {
+                    res.send("<h1>Error:  " + result.message + "</h1>");
+                }
+              });
+              &nbsp;
+  section.css-table
+    section.three-column
+      section.cell
+        h3 Current clientToken
+        p(style='width: 900px; overflow: scroll; background-color: #F2F2F2;') #{clientToken}
+      section.cell
+        //
+      section.cell
+        // 

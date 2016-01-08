@@ -1,0 +1,76 @@
+extends layout
+
+block content
+  h1 Basic Sale Payment
+  section.css-table
+    section.two-column
+      section.cell
+        h2 Drop-In UI Demo
+        form(method='post', action='/sale-checkout')
+          #payment-form
+          input(type='submit', value='Pay $1.00 (Sandbox)')
+          br
+          &nbsp;
+          img(src='images/cc_logos_big.jpg', alt='Braintree & PayPal', width='319', height='110')
+        script(src='https://js.braintreegateway.com/v2/braintree.js')
+        script.
+          braintree.setup(
+              "#{clientToken}",
+              "dropin", {
+              container: "payment-form",
+              paypal: {
+                singleUse: true,
+                amount: 1.00,
+                currency: 'USD',
+                displayName: 'Braintree Node.JS SDK Demo'
+              }
+          })
+      section.cell
+        div(style='height: 300px; overflow: scroll; background-color: #F2F2F2; padding: 10px; border-radius: 5px;')
+            h4 Client-Side Code:
+            pre.
+              // sale.jade
+              script(src='https://js.braintreegateway.com/v2/braintree.js')
+              script.
+                braintree.setup(
+                    "clientToken",
+                    "dropin", {
+                    containter: "payment-form",
+                    paypal: {
+                      singleUse: true,
+                      amount: 1.00,
+                      currency: 'USD',
+                      displayName: 'Braintree Node.JS SDK Demo'
+                    }
+                })
+            br
+            h4 Server-Side Code:
+            pre.
+              // index.js
+              var braintree = require('braintree');
+
+              var gateway = braintree.connect({
+                environment: braintree.Environment.Sandbox,
+                merchantId: 'YOUR MERCHANT ID',
+                publicKey: 'YOUR PUBLIC KEY',
+                privateKey: 'YOUR PRIVATE KEY'
+              });
+              
+              gateway.transaction.sale({
+                 amount: '1.00',
+                 paymentMethodNonce: nonce,
+                 channel: 'paypal.bn_code',
+                 options: {
+                    submitForSettlement: true
+                  }
+              }
+        //img(src='images/cc_logos_big.jpg', alt='Braintree & PayPal')
+  section.css-table
+    section.three-column
+      section.cell
+        h3 Current clientToken
+        p(style='width: 900px; overflow: scroll; background-color: #F2F2F2;') #{clientToken}
+      section.cell
+        //
+      section.cell
+        // 

@@ -1,0 +1,82 @@
+extends layout
+
+block content
+  h1 Create a Customer
+  section.css-table
+    section.two-column
+      section.cell
+        h2 Sample Sign-Up Form
+        form(method='post', action='/create-customer')
+          #customer-form
+          input(type='textbox', name='firstName', placeholder='First Name *', required)
+          input(type='textbox', name='lastName', placeholder='Last Name *', required)
+          input(type='textbox', name='email', placeholder='Email *', required)
+          input(type='textbox', name='phone', placeholder='Phone # *', required)
+          input(type='textbox', name='fax', placeholder='Fax #')
+          input(type='textbox', name='companyName', placeholder='Company')
+          input(type='textbox', name='webUrl', placeholder='Website URL')
+          br 
+          i * Required Fields
+          input(type='submit', value='Create Customer (Sandbox)')
+          br
+          &nbsp;
+          br
+          &nbsp;
+          img(src='images/braintree_paypal.png', alt='Braintree & PayPal')
+      section.cell
+        div(style='height: 300px; overflow: scroll; background-color: #F2F2F2; padding: 10px; border-radius: 5px;')
+            h4 Form Code:
+            pre.
+               // customer.jade
+               form(method='post', action='/create-customer')
+                 #customer-form
+                 input(type='textbox', name='firstName', placeholder='First Name', required)
+                 input(type='textbox', name='lastName', placeholder='Last Name', required)
+                 input(type='textbox', name='email', placeholder='Email', required)
+                 input(type='textbox', name='phone', placeholder='Phone #', required)
+                 input(type='textbox', name='fax', placeholder='Fax #')
+                 input(type='textbox', name='companyName', placeholder='Company')
+                 input(type='textbox', name='webUrl', placeholder='Website URL')
+                 input(type='submit', value='Create Customer (Sandbox)')
+            br
+            h4 Server-Side Code:
+            pre.
+               // index.js
+               app.post('/create-customer', function (req, res) {
+                  var fName = req.body.firstName;
+                  var lName = req.body.lastName;
+                  var email = req.body.email;
+                  var phone = req.body.phone;
+                  var fax = req.body.fax;
+                  var coName = req.body.companyName;
+                  var webUrl = req.body.webUrl;
+                  gateway.customer.create({
+                     firstName: fName,
+                     lastName: lName,
+                     email: email,
+                     phone: phone,
+                     fax: fax,
+                     company: coName,
+                     website: webUrl
+                  }, function (err, result) {
+                     btResponse = JSON.stringify(result, null, 4);
+                     btObj = result;
+                     if(result.success == true){
+                         //console.log(result);
+                         res.render('customer-complete', {
+                             title: 'Customer Created | Braintree Demo'});
+                     }else{
+                        console.log(result);
+                        res.send(result);
+                     }
+                  })
+               });
+  section.css-table
+    section.three-column
+      section.cell
+        h3 Current clientToken
+        p(style='width: 900px; overflow: scroll; background-color: #F2F2F2;') #{clientToken}
+      section.cell
+        //
+      section.cell
+        // 

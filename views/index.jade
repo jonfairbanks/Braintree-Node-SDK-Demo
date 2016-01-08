@@ -1,0 +1,32 @@
+extends layout
+
+block content
+  h1  Braintree Node.JS SDK Demo Portal
+  section.css-table
+    section.two-column
+      section.cell
+        img(src='images/braintree_paypal.png', alt='Braintree & PayPal')
+      section.cell
+        h2 Current Demos
+        li
+          a(href='/sale') Basic Sale Payment
+        li
+          a(href='/customer') Create Customer Profile
+        li
+          a(href='/vault') Add Payment Method to the Vault
+        li
+          a(href='/client_token') Request Client Token
+        br
+        br
+        br
+  section.css-table
+    section.three-column
+      section.cell
+        h3 Why Braintree?
+        p Braintree allows developers to accept PayPal, Bitcoin, Venmo, Apple Pay, Android Pay, cards, and whatever’s next -- all with a single integration.
+      section.cell
+        h3 Who&#39;s using Braintree?
+        p Everyone from Uber to GitHub and AirBnB to OpenTable use Braintree for their processing needs. Check out more Braintree clients here...
+      section.cell
+        h3 How flexible is Braintree?
+        p Braintree offers SDK&#39;s in 6 languages, can accept payments in 40+ countries in 130 different currencies, all with industry leading fraud protection.
