@@ -169,7 +169,7 @@ app.post('/vault-checkout', function (req, res) {
         }
         timestamp = moment(btObj.transaction.createdAt, moment.ISO_8601).format('MMM Do YYYY @ h:mm a');
         res.render('vault-complete', {
-           title: 'Vault | Braintree Demo'}
+           title: 'Vault 111 | Braintree Demo'}
         );
     } else {
         res.send("<h1>Error:  " + result.message + "</h1>");
