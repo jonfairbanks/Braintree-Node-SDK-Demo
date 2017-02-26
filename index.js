@@ -51,12 +51,6 @@ app.get('/about', function(req, res){
   });
 });
 
-app.get('/client_token', function (req, res) {
-  gateway.clientToken.generate({}, function (err, response) {
-    res.send(response.clientToken);
-  });
-});
-
 app.get('/cool', function(request, response) {
   response.send(cool());
 });
@@ -118,7 +112,7 @@ app.post('/sale-checkout', function (req, res) {
       submitForSettlement: true
     }
   }, function (err, result) {
-    //TO DO: Error Handling
+    console.log(err);
 	btResponse = JSON.stringify(result, null, 4);
     btObj = result;
     try {
